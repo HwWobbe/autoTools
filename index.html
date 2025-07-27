@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Automation Tool Selector</title>
+</head>
+<body>
+<form id="automationToolSelector">
+  <fieldset>
+    <legend>1. What do you want to automate?</legend>
+    <label><input type="radio" name="automationType" value="system"> System-wide tasks (e.g., open apps)</label><br>
+    <label><input type="radio" name="automationType" value="web"> Text input / web forms (e.g., emails)</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>2. If system-wide: Are you using Windows?</legend>
+    <label><input type="radio" name="windowsUser" value="yes"> Yes</label><br>
+    <label><input type="radio" name="windowsUser" value="no"> No</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>3. If web: Do you use Chrome / Edge / Brave?</legend>
+    <label><input type="radio" name="browserSupport" value="yes"> Yes</label><br>
+    <label><input type="radio" name="browserSupport" value="no"> No</label>
+  </fieldset>
+
+  <p><strong>Recommendation:</strong></p>
+  <div id="toolSuggestion">Please complete the selections above.</div>
+</form>
+
+<script>
+  const form = document.getElementById('automationToolSelector');
+  const output = document.getElementById('toolSuggestion');
+
+  form.addEventListener('change', () => {
+    const type = form.automationType.value;
+    const windows = form.windowsUser.value;
+    const browser = form.browserSupport.value;
+
+    if (type === 'system') {
+      if (windows === 'yes') {
+        output.textContent = "✅ Use AutoHotKey (Windows-based full automation)";
+      } else if (windows === 'no') {
+        output.textContent = "❌ AutoHotKey not available. Consider platform-specific alternatives.";
+      } else {
+        output.textContent = "Please specify if you're using Windows.";
+      }
+    } else if (type === 'web') {
+      if (browser === 'yes') {
+        output.textContent = "✅ Use TextBlaze (Web-based text automation)";
+      } else if (browser === 'no') {
+        output.textContent = "🟡 TextBlaze may not be fully supported. Consider aText or Espanso.";
+      } else {
+        output.textContent = "Please specify your browser support.";
+      }
+    } else {
+      output.textContent = "Please select what you want to automate.";
+    }
+  });
+</script>
+</body>
+</html>
